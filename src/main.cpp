@@ -452,12 +452,12 @@ void setup() {
         SAFE_STACK_BUFFER_SIZE / 4
     ); // Must be invoked before Serial.begin(). Default is 256 chars
     Serial.begin(115200);
-// Explicit SPI and SD initialization for ESP32-C5 CYD variant
-SPI.begin(7, 2, 6, 10); // Adjust SCK, MISO, MOSI, CS if needed for C5
-if (!SD.begin(10, SPI)) {
-    log_e("SD Card initialization failed on custom SPI bus");
+// Force correct SPI pins for NM-CYD-C5 with CS on pin 1
+SPI.begin(6, 2, 7, 1); // SCK=6, MISO=2, MOSI=7, CS=1
+if (!SD.begin(1, SPI)) {
+    log_e("SD Card initialization failed with CS pin 1");
 } else {
-    log_i("SD Card successfully initialized and mounted!");
+    log_i("SD Card successfully mounted using CS pin 1!");
 }
 
     log_d("Total heap: %d", ESP.getHeapSize());
