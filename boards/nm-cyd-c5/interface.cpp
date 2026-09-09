@@ -2,6 +2,10 @@
 #include "core/utils.h"
 #include <interface.h>
 
+#undef HAS_TOUCH
+
+/***************************************************************************************
+** Function name: _setup_gpio()
 /***************************************************************************************
 ** Function name: _setup_gpio()
 ** Location: main.cpp
