@@ -452,9 +452,13 @@ void setup() {
         SAFE_STACK_BUFFER_SIZE / 4
     ); // Must be invoked before Serial.begin(). Default is 256 chars
     Serial.begin(115200);
-
-WiFi.mode(WIFI_AP);
-WiFi.softAP("bruce", "bruce1234");
+// Explicit SPI and SD initialization for ESP32-C5 CYD variant
+SPI.begin(7, 2, 6, 10); // Adjust SCK, MISO, MOSI, CS if needed for C5
+if (!SD.begin(10, SPI)) {
+    log_e("SD Card initialization failed on custom SPI bus");
+} else {
+    log_i("SD Card successfully initialized and mounted!");
+}
 
     log_d("Total heap: %d", ESP.getHeapSize());
     log_d("Free heap: %d", ESP.getFreeHeap());
